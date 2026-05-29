@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../../Supabase/config';
 import './Register.css';
 
+const CLAVE_ADMIN = 'udla2026';
+
 function Register() {
-  const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [nombre, setNombre]         = useState('');
+  const [email, setEmail]           = useState('');
+  const [password, setPassword]     = useState('');
+  const [claveAdmin, setClaveAdmin] = useState('');
+  const [message, setMessage]       = useState('');
+  const [isLoading, setIsLoading]   = useState(false);
+  const [success, setSuccess]       = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,21 +22,24 @@ function Register() {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) { setMessage(error.message); setIsLoading(false); return; }
 
-    // Esperar que el trigger cree el perfil
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Usar upsert para garantizar que se guarda el nombre
+    const esAdmin = claveAdmin === CLAVE_ADMIN;
+
     await supabase
       .from('profiles')
       .upsert({
         id: data.user.id,
         nombre,
-        role: 'user'
+        role: esAdmin ? 'admin' : 'user'
       });
 
     setIsLoading(false);
     setSuccess(true);
-    setMessage('Cuenta creada exitosamente. Ya puedes iniciar sesión.');
+    setMessage(esAdmin
+      ? 'Cuenta creada como administrador. Ya puedes iniciar sesión.'
+      : 'Cuenta creada exitosamente. Ya puedes iniciar sesión.'
+    );
   };
 
   return (
@@ -42,7 +48,7 @@ function Register() {
         <div className="register-header">
           <div className="register-logos">
             <img src="/udla.png" alt="Logo UDLA" className="register-img-logo" />
-            <div className="register-escudo">UA</div>
+            {/* <div className="register-escudo">UA</div> */}
           </div>
           <h1 className="register-title">Crear cuenta</h1>
           <p className="register-subtitle">Regístrate con tu correo institucional</p>
@@ -66,6 +72,14 @@ function Register() {
             <label className="register-label" htmlFor="register-password">Contraseña</label>
             <input className="register-input" id="register-password" type="password"
               minLength="6" value={password} onChange={e => setPassword(e.target.value)} required />
+          </div>
+          <div className="register-group">
+            <label className="register-label" htmlFor="register-clave">
+              Clave de administrador <span className="register-opcional">(opcional)</span>
+            </label>
+            <input className="register-input" id="register-clave" type="password"
+              placeholder="Solo si eres administrador"
+              value={claveAdmin} onChange={e => setClaveAdmin(e.target.value)} />
           </div>
           {message && <p className={success ? 'register-success' : 'form-error'}>{message}</p>}
           <button className="register-btn" type="submit" disabled={isLoading || success}>
