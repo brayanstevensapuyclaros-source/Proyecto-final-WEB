@@ -1,6 +1,10 @@
+import { useLocation } from 'react-router-dom';
 import './Footer.css';
 
 function Footer() {
+  const { pathname } = useLocation();
+  if (pathname === '/login' || pathname === '/register') return null;
+
   return (
     <footer className="footer">
       <div className="footer-inner">

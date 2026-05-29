@@ -5,9 +5,9 @@ import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail]         = useState('');
-  const [password, setPassword]   = useState('');
-  const [message, setMessage]     = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -26,10 +26,11 @@ function Login() {
         <div className="login-header">
           <div className="login-logos">
             <img src="/udla.png" alt="Logo UDLA" className="login-img-logo" />
-            
+            {/* <div className="login-escudo">UA</div> */}
           </div>
-          <h1 className="login-title">Iniciar sesión</h1>
-          <p className="login-subtitle">Sistema de Reporte de Incidentes</p>
+          <h1 className="login-title">Sistema de Reporte de Incidentes</h1>
+          <p className="login-subtitle">Universidad de la Amazonia</p>
+          <hr className="login-divider" />
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
@@ -54,6 +55,11 @@ function Login() {
           No tienes cuenta?{' '}
           <Link to="/register" className="login-link">Regístrate aquí</Link>
         </p>
+        <div className="login-card-footer">
+          <p>Copyright © 2026 Universidad de la Amazonia</p>
+          <p>Departamento de Tecnologías de la Información</p>
+          <p>Área de Investigación y Desarrollo</p>
+        </div>
       </div>
     </section>
   );

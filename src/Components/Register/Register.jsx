@@ -4,19 +4,34 @@ import { supabase } from '../../Supabase/config';
 import './Register.css';
 
 function Register() {
-  const [email, setEmail]         = useState('');
-  const [password, setPassword]   = useState('');
-  const [message, setMessage]     = useState('');
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess]     = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
     setIsLoading(true);
-    const { error } = await supabase.auth.signUp({ email, password });
+
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) { setMessage(error.message); setIsLoading(false); return; }
+
+    // Esperar que el trigger cree el perfil
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // Usar upsert para garantizar que se guarda el nombre
+    await supabase
+      .from('profiles')
+      .upsert({
+        id: data.user.id,
+        nombre,
+        role: 'user'
+      });
+
     setIsLoading(false);
-    if (error) { setMessage(error.message); return; }
     setSuccess(true);
     setMessage('Cuenta creada exitosamente. Ya puedes iniciar sesión.');
   };
@@ -31,9 +46,16 @@ function Register() {
           </div>
           <h1 className="register-title">Crear cuenta</h1>
           <p className="register-subtitle">Regístrate con tu correo institucional</p>
+          <hr className="register-divider" />
         </div>
 
         <form className="register-form" onSubmit={handleSubmit}>
+          <div className="register-group">
+            <label className="register-label" htmlFor="register-nombre">Nombre completo</label>
+            <input className="register-input" id="register-nombre" type="text"
+              placeholder="Tu nombre completo"
+              value={nombre} onChange={e => setNombre(e.target.value)} required />
+          </div>
           <div className="register-group">
             <label className="register-label" htmlFor="register-email">Correo institucional</label>
             <input className="register-input" id="register-email" type="email"
@@ -55,6 +77,12 @@ function Register() {
           Ya tienes cuenta?{' '}
           <Link to="/login" className="register-link">Inicia sesión</Link>
         </p>
+
+        <div className="register-card-footer">
+          <p>Copyright © 2026 Universidad de la Amazonia</p>
+          <p>Departamento de Tecnologías de la Información</p>
+          <p>Área de Investigación y Desarrollo</p>
+        </div>
       </div>
     </section>
   );

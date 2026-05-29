@@ -71,6 +71,23 @@
 .promo-ok  { margin-top: 12px; color: var(--verde); font-size: 13px; font-weight: 600; background: var(--verde-claro); padding: 9px 14px; border-radius: 7px; border: 1px solid #a8d5bb; }
 .promo-err { margin-top: 12px; color: var(--rojo);  font-size: 13px; font-weight: 600; background: var(--rojo-claro);  padding: 9px 14px; border-radius: 7px; border: 1px solid #f5c6c2; }
 
+.btn-quitar {
+  background: white;
+  color: var(--rojo);
+  border: 2px solid var(--rojo);
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  height: fit-content;
+}
+.btn-quitar:hover { background: var(--rojo); color: white; }
+.btn-quitar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
 @media (max-width: 900px) {
   .admin-toolbar, .promo-row { flex-direction: column; align-items: stretch; }
   .toolbar-left { width: 100%; }

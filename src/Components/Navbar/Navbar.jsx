@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import './Navbar.css';
 
 function Navbar() {
-  const { user, role, signOut } = useAuth();
+  const { user, role, nombre, signOut } = useAuth();
   const navigate = useNavigate();
 
   if (!user) return null;
@@ -25,7 +25,7 @@ function Navbar() {
         </div>
 
         <div className="navbar-user">
-          <span className="nav-email">{user.email}</span>
+          <span className="nav-email">{nombre || user.email}</span>
           {role === 'admin' && <span className="nav-badge">Administrador</span>}
           <button className="nav-logout" onClick={handleLogout}>Cerrar sesión</button>
         </div>

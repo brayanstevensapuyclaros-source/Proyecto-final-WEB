@@ -4,9 +4,9 @@ import './AdminPanel.css';
 
 const ESTADOS = ['Reportado', 'En proceso', 'Resuelto'];
 const ESTADO_COLOR = {
-  'Reportado':  '#dc3545',
+  'Reportado': '#dc3545',
   'En proceso': '#ffc107',
-  'Resuelto':   '#28a745',
+  'Resuelto': '#28a745',
 };
 
 // Cámbiala por la clave que quieras usar
@@ -14,13 +14,13 @@ const CLAVE_ADMIN = 'udla2026';
 
 function AdminPanel() {
   const [incidents, setIncidents] = useState([]);
-  const [loading, setLoading]     = useState(true);
-  const [selected, setSelected]   = useState([]);
-  const [feedback, setFeedback]   = useState('');
+  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState([]);
+  const [feedback, setFeedback] = useState('');
   const [correoNuevoAdmin, setCorreoNuevoAdmin] = useState('');
-  const [claveIngresada, setClaveIngresada]     = useState('');
-  const [promoMsg, setPromoMsg]                 = useState('');
-  const [promoLoading, setPromoLoading]         = useState(false);
+  const [claveIngresada, setClaveIngresada] = useState('');
+  const [promoMsg, setPromoMsg] = useState('');
+  const [promoLoading, setPromoLoading] = useState(false);
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -34,7 +34,7 @@ function AdminPanel() {
 
   const changeEstado = async (id, grupoId, nuevoEstado) => {
     if (grupoId) await supabase.from('incidents').update({ estado: nuevoEstado }).eq('grupo_id', grupoId);
-    else         await supabase.from('incidents').update({ estado: nuevoEstado }).eq('id', id);
+    else await supabase.from('incidents').update({ estado: nuevoEstado }).eq('id', id);
     fetchAll();
   };
 
@@ -66,6 +66,30 @@ function AdminPanel() {
       return;
     }
     setPromoMsg('ok:' + correoNuevoAdmin + ' ahora es administrador.');
+    setCorreoNuevoAdmin('');
+    setClaveIngresada('');
+  };
+
+  const handleQuitarAdmin = async (e) => {
+    e.preventDefault();
+    setPromoMsg('');
+
+    if (claveIngresada !== CLAVE_ADMIN) {
+      setPromoMsg('error:Clave incorrecta. No tienes autorización.');
+      return;
+    }
+
+    setPromoLoading(true);
+    const { data, error } = await supabase
+      .rpc('quitar_admin_por_correo', { correo: correoNuevoAdmin });
+    setPromoLoading(false);
+
+    if (error || !data) {
+      setPromoMsg('error:No se encontró ningún usuario con ese correo.');
+      return;
+    }
+
+    setPromoMsg('ok:' + correoNuevoAdmin + ' ya no es administrador.');
     setCorreoNuevoAdmin('');
     setClaveIngresada('');
   };
@@ -141,6 +165,10 @@ function AdminPanel() {
             </div>
             <button type="submit" className="btn-promo" disabled={promoLoading}>
               {promoLoading ? 'Procesando...' : 'Promover'}
+            </button>
+            <button type="button" className="btn-quitar" disabled={promoLoading}
+              onClick={handleQuitarAdmin}>
+              {promoLoading ? 'Procesando...' : 'Quitar admin'}
             </button>
           </div>
           {promoMsg && (
