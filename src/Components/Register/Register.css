@@ -36,6 +36,12 @@
 .register-footer  { margin-top: 20px; font-size: 13px; color: var(--texto-suave); text-align: center; }
 .register-link    { color: var(--verde); font-weight: 600; }
 .register-link:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .register-card { padding: 28px 18px; }
+  .register-logos { gap: 8px; }
+  .register-title { font-size: 20px; }
+}
 .register-success {
   color: var(--verde); font-size: 13px; background: var(--verde-claro);
   padding: 8px 12px; border-radius: 6px; border: 1px solid #a8d5bb;

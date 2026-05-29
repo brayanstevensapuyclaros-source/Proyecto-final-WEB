@@ -18,7 +18,6 @@ function Navbar() {
       <div className="navbar-top">
         <div className="navbar-brand">
           <img src="./udla.png" alt="Logo UDLA" className="navbar-img-logo" />
-          <div className="navbar-logo">UA</div>
           <div className="navbar-brand-text">
             <span className="navbar-title">Sistema de Incidentes</span>
             <span className="navbar-subtitle">Universidad de la Amazonia</span>

@@ -26,7 +26,7 @@ function Login() {
         <div className="login-header">
           <div className="login-logos">
             <img src="/udla.png" alt="Logo UDLA" className="login-img-logo" />
-            <div className="login-escudo">UA</div>
+            
           </div>
           <h1 className="login-title">Iniciar sesión</h1>
           <p className="login-subtitle">Sistema de Reporte de Incidentes</p>

@@ -51,4 +51,12 @@
 }
 .btn-submit:hover    { background: var(--verde-oscuro); transform: translateY(-1px); }
 .btn-submit:disabled { background: #aaa; cursor: not-allowed; transform: none; }
-@media (max-width: 600px) { .iform-card { padding: 24px 16px; } }
+@media (max-width: 800px) {
+  .iform-card { padding: 28px 22px; max-width: 100%; }
+  .iform-actions { flex-direction: column; }
+  .btn-cancel, .btn-submit { width: 100%; }
+}
+@media (max-width: 600px) {
+  .iform-card { padding: 22px 16px; }
+  .iform-title { font-size: 20px; }
+}

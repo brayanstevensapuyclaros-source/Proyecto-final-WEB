@@ -55,3 +55,9 @@
 .login-footer { margin-top: 20px; font-size: 13px; color: var(--texto-suave); text-align: center; }
 .login-link   { color: var(--verde); font-weight: 600; }
 .login-link:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .login-card { padding: 28px 18px; }
+  .login-logos { gap: 8px; }
+  .login-title { font-size: 20px; }
+}

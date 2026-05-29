@@ -50,3 +50,13 @@
 
 .ilist-grid  { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
 .ilist-empty { color: var(--texto-suave); text-align: center; padding: 50px; font-size: 15px; }
+
+@media (max-width: 900px) {
+  .ilist-header { flex-direction: column; align-items: stretch; }
+  .btn-new-incident { width: 100%; text-align: center; }
+  .ilist-filters { justify-content: flex-start; }
+}
+@media (max-width: 600px) {
+  .ilist-grid { gap: 12px; }
+  .filter-btn { flex: 1 1 100%; justify-content: center; padding: 10px 14px; }
+}

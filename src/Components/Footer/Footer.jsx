@@ -5,7 +5,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <img src="/udlapie.png" alt="Logo UDLA" className="footer-img-logo" />
+          {/* <img src="/udlapie.png" alt="Logo UDLA" className="footer-img-logo" /> */}
           <div className="footer-logo">UA</div>
           <div>
             <p className="footer-title">Universidad de la Amazonia</p>

@@ -26,6 +26,8 @@ a:hover { text-decoration: underline; }
 
 button { font-family: inherit; }
 
+img, picture, svg { max-width: 100%; height: auto; }
+
 input, select, textarea {
   font-family: inherit;
   font-size: 15px;
